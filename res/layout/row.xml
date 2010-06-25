@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="wrap_content"
+	android:stretchColumns="0" android:padding="5dp">
+ 
+	<TableRow android:padding="5dp">
+		<LinearLayout android:orientation="vertical">
+			<TextView android:textSize="16sp" android:textStyle="bold"
+				android:id="@+id/show_name" android:layout_width="fill_parent"
+				android:layout_height="wrap_content">
+			</TextView>
+ 
+			<TextView android:textSize="16sp" android:id="@+id/episode_title"
+				android:layout_width="fill_parent" android:layout_height="wrap_content">
+			</TextView>
+		</LinearLayout>
+ 
+		<TextView android:textSize="16sp" android:id="@+id/callog_detail_sms_price"
+			android:layout_width="wrap_content" android:layout_height="fill_parent"></TextView>
+	</TableRow>
+</TableLayout>
