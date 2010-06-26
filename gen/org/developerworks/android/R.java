@@ -14,7 +14,8 @@ public final class R {
         public static final int icon=0x7f020000;
     }
     public static final class id {
-        public static final int callog_detail_sms_price=0x7f050002;
+        public static final int episode_date=0x7f050003;
+        public static final int episode_number=0x7f050002;
         public static final int episode_title=0x7f050001;
         public static final int show_name=0x7f050000;
     }

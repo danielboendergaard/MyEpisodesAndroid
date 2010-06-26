@@ -12,8 +12,8 @@ import android.util.Xml;
 public class AndroidSaxFeedParser extends BaseFeedParser {
 
 	static final String RSS = "rss";
-	public AndroidSaxFeedParser() {
-		super("http://myepisodes.com/rss.php?feed=mylist&uid=BigFooT&pwdmd5=d2b53174d782921941ef5914ccfb21e1");
+	public AndroidSaxFeedParser(String url) {
+		super(url);
 	}
 
 	public List<Message> parse() {

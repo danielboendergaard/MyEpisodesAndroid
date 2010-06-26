@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,16 +17,34 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 public class MessageList extends ListActivity {
 	
 	private List<Message> messages;
+	public static final String PREFS = "MyEpisodesAndroidPrefs";
+	private String username;
+	private String password;
 	
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.main);
-        loadFeed();
+        
+        SharedPreferences settings = getSharedPreferences(PREFS, 0);
+        username = settings.getString("username", "");
+        password = settings.getString("password", "");
+        
+        if(username == "" || password == ""){
+        	Context context = getApplicationContext();
+        	CharSequence text = "You need to setup your username and password for MyEpisodes!";
+        	int duration = Toast.LENGTH_SHORT;
+        	
+        	Toast toast = Toast.makeText(context, text, duration);
+        	toast.show();
+        } else {
+        	loadFeed();
+        }
     }
     
 	@Override
@@ -54,7 +74,8 @@ public class MessageList extends ListActivity {
 	private void loadFeed(){
     	try{
     		//Create an instance of the parser and parse feed
-	    	FeedParser parser = new AndroidSaxFeedParser();
+    		String url = "http://myepisodes.com/rss.php?feed=mylist&uid=BigFooT&pwdmd5=d2b53174d782921941ef5914ccfb21e1";
+	    	FeedParser parser = new AndroidSaxFeedParser(url);
 	    	messages = parser.parse();
 	    		    	
 	    	//Initialize list of Maps
@@ -63,31 +84,23 @@ public class MessageList extends ListActivity {
 	    	//Iterate through list of messages (RSS Feed)
 	    	for (Message msg : messages){
 	    		Map<String, String> map = new HashMap<String, String>();
-	    		map.put("title", msg.getTitle());
-	    		map.put("description", msg.getDescription());
+	    		map.put("showName", msg.getShowName());
+	    		map.put("episodeTitle", msg.getEpisodeTitle());
+	    		map.put("episodeNumber", msg.getEpisodeNumber());
+	    		map.put("episodeDate", msg.getepisodeDate());
 	    		list.add(map);
 	    	}
 	    	
 	    	//Array that specifies which key is used on the ListView
-	    	String[] from = {"title", "description"};
+	    	String[] from = {"showName", "episodeTitle", "episodeNumber", "episodeDate"};
 	    	
 	    	//Array that specifies the layout styles
-	    	int[] to = {R.id.show_name, R.id.episode_title};
+	    	int[] to = {R.id.show_name, R.id.episode_title, R.id.episode_number, R.id.episode_date};
 	    	
 	    	SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), list, R.layout.row, from, to);
 	    	
 	    	this.setListAdapter(adapter);
-	    	
-	    	//	    	List<String> titles = new ArrayList<String>(messages.size());
-//	    	for (Message msg : messages){
-//	    		titles.add(msg.getTitle());
-//	    	}
-//	    	ArrayAdapter<String> adapter = 
-//	    		new ArrayAdapter<String>(this, R.layout.row,titles);
-//	    	this.setListAdapter(adapter);
-	    	
-	    	
-	    	
+    	
     	} catch (Throwable t){
     		Log.e("AndroidNews",t.getMessage(),t);
     	}
