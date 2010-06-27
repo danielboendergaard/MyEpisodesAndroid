@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">MyEpisodes</string>
     <string name="update_feed">Update</string>
+    <string name="settings">Settings</string>
 </resources>

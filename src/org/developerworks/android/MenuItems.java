@@ -4,5 +4,6 @@ package org.developerworks.android;
  */
 
 public enum MenuItems{
-	UPDATE_FEED;
+	UPDATE_FEED,
+	SETTINGS;
 }
